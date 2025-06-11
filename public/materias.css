@@ -88,3 +88,12 @@
     .hidden{
       visibility: hidden;
     }
+    /* FOOTER */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #222b30;
+    color: white;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
