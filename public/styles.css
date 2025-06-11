@@ -53,6 +53,7 @@ header {
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease;
+    text-decoration: none;
 }
 
 /* BOTÃO DE SIGUNP */
@@ -66,6 +67,7 @@ header {
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.3s ease;
+    text-decoration: none;
 }
 
 .btn-signup:hover {
