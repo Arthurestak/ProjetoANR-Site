@@ -97,3 +97,9 @@ footer {
     font-size: 0.9rem;
     margin-top: 2rem;
 }
+
+/*Tela Conteúdos*/
+.conteudos-section{
+    justify-content: center;
+    flex-direction: column;
+}
