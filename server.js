@@ -1,5 +1,5 @@
-const SubSubjects = require('./controllers/materiasController')
-//  require('dotenv').config();
+const routes = require('./routes');
+require('dotenv').config();
 const mysql = require('mysql2');
 const express = require('express');
 const path = require('path');
@@ -34,7 +34,8 @@ db.connect((err) => {
 app.get('/', (req, res) => res.render('index'));
 app.get('/login', (req, res) => res.render('login'));
 app.get('/signup', (req, res) => res.render('signup'));
-app.get('/materias', (req, res) => {res.render('materias', new SubSubjects())});    	
+app.use(routes);
+
 // // // Rota para processar cadastro
 //  app.post('/signup', (req, res) => {
 //      const { name, email, password } = req.body;
