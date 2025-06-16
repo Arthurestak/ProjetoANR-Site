@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     const sidebar = document.getElementById("sidebar");
     const toggleButton = document.querySelector(".sidebar-toggle");
     const closeButton = document.querySelector(".close-sidebar");
-
+    
     section.forEach((section, hidden) =>{
         setTimeout(() => {
             section.classList.remove("hidden");
@@ -27,4 +27,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     closeButton.addEventListener("click", function () {
         sidebar.classList.remove("active");
     });
+
 });
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel CNJ</title>
+  <style>
+    body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: white;
+}
+
+.container {
+  width: 90%;
+  max-width: 700px;
+  margin: 40px auto;
+}
+
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  background-color: #e7f0fc;
+  transform: translateX(5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #222b30;
+    color: white;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+  <% conteudos.forEach(conteudo => { %>
+        <div class="card"  data-id="<%= conteudo.id_content %>">         
+          <span><%= conteudo.name %></span>
+        </div>
+        
+      <% }) %>
+
+    <%- include('./partials/footer.ejs') %>
+  </div>
+</body>
+</html>

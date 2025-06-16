@@ -11,14 +11,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json())
  // // Configuração do banco de dados
  const db =  mysql.createConnection({
-     host: 'localhost',
-     user: 'root',
-     password: 'senac',
-     database: 'anr_database',
-     port: 3306
+     host: process.env.DATABASE_HOST,
+     user: process.env.DATABASE_USER,
+     password: process.env.DATABASE_PASSWORD,
+     database: process.env.DATABASE,
+     port: process.env.DATABASE_PORT
  });
 
 db.connect((err) => {
@@ -30,38 +30,38 @@ db.connect((err) => {
 });
 
 
-// // Rotas de renderização
+ // Rotas de renderização
 app.get('/', (req, res) => res.render('index'));
 app.get('/login', (req, res) => res.render('login'));
 app.get('/signup', (req, res) => res.render('signup'));
 app.use(routes);
 
-// // // Rota para processar cadastro
-//  app.post('/signup', (req, res) => {
-//      const { name, email, password } = req.body;
-//      const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
-//      db.query(query, [name, email, password], (err, result) => {
-//          if (err) {
-//              console.error('Erro ao cadastrar usuário:', err);
-//              res.send('Erro ao cadastrar.');
-//          } else {
-//              res.redirect('/login');
-//          }
-//      });
-//  });
-// // // Rota para processar login
-//  app.post('/login', (req, res) => {
-//      const { email, password } = req.body;
-//      const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-//      db.query(query, [email, password], (err, result) => {
-//          if (err || result.length === 0) {
-//              console.error('Erro ao autenticar usuário:', err);
-//              res.send('Login inválido.');
-//          } else {
-//              res.send('Login bem-sucedido!');
-//          }
-//      });
-//  });
+ // Rota para processar cadastro
+  app.post('/signup', (req, res) => {
+      const { name, email, password } = req.body;
+      const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
+      db.query(query, [name, email, password], (err, result) => {
+          if (err) {
+              console.error('Erro ao cadastrar usuário:', err);
+              res.send('Erro ao cadastrar.');
+          } else {
+              res.redirect('/login');
+          }
+      });
+  });
+// Rota para processar login
+  app.post('/login', (req, res) => {
+      const { email, password } = req.body;
+      const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
+      db.query(query, [email, password], (err, result) => {
+          if (err || result.length === 0) {
+              console.error('Erro ao autenticar usuário:', err);
+              res.send('Login inválido.');
+          } else {
+              res.send('Login bem-sucedido!');
+          }
+      });
+  });
 
 
 // Iniciar servidor
