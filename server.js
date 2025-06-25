@@ -3,7 +3,8 @@ require('dotenv').config();
 const mysql = require('mysql2');
 const express = require('express');
 const path = require('path');
-
+const session = require('express-session'); 
+const flash = require('connect-flash');
 const app = express();
 
  // Configuração do Express
@@ -29,12 +30,20 @@ db.connect((err) => {
     }
 });
 
+// Configuração de session
+const sessionOptions = session({
+  secret: 'segredo-super-seguro',
+  resave: false,
+  saveUninitialized: true
+});
 
  // Rotas de renderização
 app.get('/', (req, res) => res.render('index'));
 app.get('/login', (req, res) => res.render('login'));
 app.get('/signup', (req, res) => res.render('signup'));
 app.use(routes);
+app.use(sessionOptions);    
+app.use(flash());   
 
  // Rota para processar cadastro
   app.post('/signup', (req, res) => {

@@ -1,38 +1,17 @@
- document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.card');
+const form = document.querySelector('.question-form');
+document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      const url = window.location.href;
+      const id = e.currentTarget.getAttribute('data-id');
 
-    cards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        const id = e.currentTarget.getAttribute('data-id');
-        window.location.href = `/conteudos/${id}`; // redirecionamento simples
-      });
+      if(url.includes('conteudos')){
+        window.location.href = `/questao/${id}`; 
+      }else{
+        window.location.href = `/conteudos/${id}`; 
+      }
     });
-  });
-
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-//   const cards = document.querySelectorAll('.card');
-
-//   cards.forEach(card => {
-//     card.addEventListener('click', async (e) => {
-//       const id = e.currentTarget.getAttribute('data-id');
-//           try {
-//         const response = await fetch('/conteudos', {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json'
-//           },
-//           body: JSON.stringify({ id_sub_subject: id })
-//         });
-
-//         const data = await response.json();
-//         console.log('Resposta do servidor:', data);
-//       } catch (error) {
-//         console.error('Erro ao enviar o ID:', error);
-//       }
-
-      
-//     });
-//   });
-// });
+  })
+})
+ 

@@ -101,3 +101,42 @@ footer {
     justify-content: center;
     flex-direction: column;
 }
+
+/* flash-messages css */
+
+.alert {
+  padding: 16px 20px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: fadeIn 0.5s ease-in-out;
+  transition: all 0.3s ease;
+  border-left: 6px solid;
+}
+
+.alert-danger {
+  background-color: #fcebea;
+  color: #cc1f1a;
+  border-color: #e3342f;
+}
+
+.alert-success {
+  background-color: #e3fcec;
+  color: #1f9d55;
+  border-color: #38c172;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  } to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert + .alert {
+  margin-top: 10px;
+}

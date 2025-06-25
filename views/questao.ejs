@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz - Certo ou Errado</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fc;
+    }
+
+    header {
+      background-color: #20263a;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #bfc4d2;
+    }
+
+    .section-title {
+      text-align: center;
+      color: #5a2ca0;
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all .6s ease;
+    }
+
+    .container.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .card-questao {
+      display: flex;
+      flex-direction: column;
+      background-color: #d2f9ff;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(90, 44, 160, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .card-questao:hover {
+      transform: scale(1.02);
+      background-color: #1316afb4;
+    }
+
+    .card-questao span {
+      font-weight: bold;
+      color: #20263a;
+      margin-bottom: 0.5rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn  {
+      flex: 1;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-top: 10%;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn {
+      background-color: #5a2ca0;
+      color: white;
+    }
+
+    .btn:hover {
+      background-color: #452083;
+    }
+
+    .inputs{
+      display: flex;
+      justify-content: start;
+      flex-direction: column;
+      margin-top: 7%;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Quiz - Certo ou Errado</h1>
+    <p>Responda as questões abaixo</p>
+  </header>
+
+  <div class="section-title">Perguntas</div>
+
+  <div class="container show">
+
+     <% questao.forEach(questao => { %>
+      <form action="/answer" method="post" class="question-form">
+
+        <div class="card-questao">         
+        <span><%= questao.id_question %>. <%= questao.title %></span>
+          <div class="inputs">
+            <div>
+              <input type="radio" name="answer" value="1"> <span>Certo</span>
+            </div>
+
+            <div>
+              <input type="radio" name="answer" value="0"> <span>Errado</span>
+            </div>
+          </div>
+        <input type="hidden" name="id_question" value="<%= questao.id_question %>">
+        <button class="btn" type="submit">Responder</button>
+      </div>
+        </div>
+        
+      </form>
+      <% }) %>
+    </div>
+
+    <script src="/scripts/content.js"></script>
+      <%- include('./partials/footer.ejs') %>
+</body>
+</html>

@@ -33,21 +33,6 @@ exports.index = async (req, res) => {
 
 };
 
-// exports.contentScreen = async (req, res) =>{
-    
-//     const { id_sub_subject } = await req.params.id;
-//     console.log('ID retornado:', id_sub_subject);
-    
-//     const banco = await connection();
-//     [ query ] = await banco.execute(`SELECT * FROM content WHERE id_sub_subject = ${id_sub_subject};`);
-    
-//     res.render('conteudos', {
-//         conteudo: query.name
-//     });
-//     console.log('recebi o id', id_sub_subject);
-// };
-
-
 exports.contentScreen = async (req, res) => {
   const id_sub_subject = req.params.id;
 
@@ -68,3 +53,53 @@ exports.contentScreen = async (req, res) => {
     res.status(500).send('Erro interno do servidor');
   }
 };
+
+exports.questionScreen = async (req, res) =>  {
+  
+    const id_content = req.params.id;
+    try {
+    const banco = await connection();
+    const [questao] = await banco.execute(
+      'SELECT * FROM questions WHERE id_content = ?', 
+      [id_content]
+    );
+
+    res.render('questao', {
+      questao,
+      id_content,
+      success: req.flash('success'),
+       error: req.flash('error')
+    });
+
+  }catch (error) {
+    console.error('Erro ao buscar conteúdos:', error);
+    res.status(500).send('Erro interno do servidor');
+  }
+};
+
+exports.answerTretment = async (req, res) =>{
+  const id_question = req.body.id_question;
+  const id_answer = req.body.answer;
+ 
+  try{
+    const banco = await connection();
+    const answer  = await banco.execute(
+      'SELECT answer FROM questions WHERE id_question = ?',
+      [id_question]
+    );
+    
+    if(answer[0][0].answer != id_answer){
+      console.log('Resposta errada');
+      req.flash('error', 'Você errou uma resposta.');
+      
+      return;
+    }
+    console.log('Certa respota');
+    req.flash('success', 'Você acertou a resposta.');
+    res.redirect(`/questao/${id_question}`);
+    
+  }catch (error) {
+    console.error('Erro ao buscar conteúdos:', error);
+    res.status(500).send('Erro interno do servidor');
+  }
+}
