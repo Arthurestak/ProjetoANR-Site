@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Quiz - Certo ou Errado</title>
@@ -14,7 +15,7 @@
       background-color: #20263a;
       color: white;
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
     }
 
     header h1 {
@@ -62,10 +63,6 @@
       transition: transform 0.2s ease;
     }
 
-    .card-questao:hover {
-      transform: scale(1.02);
-      background-color: #1316afb4;
-    }
 
     .card-questao span {
       font-weight: bold;
@@ -79,7 +76,7 @@
       margin-top: 1rem;
     }
 
-    .btn  {
+    .btn {
       flex: 1;
       padding: 1rem;
       font-size: 1rem;
@@ -99,15 +96,51 @@
       background-color: #452083;
     }
 
-    .inputs{
+    .inputs {
       display: flex;
       justify-content: start;
       flex-direction: column;
       margin-top: 7%;
     }
+   
+
+.alert {
+  padding: 16px 20px;
+  margin: 15px auto;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  font-size: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.alert-success {
+  background-color: #d1f2d1;
+  color: #155724;
+  border-left: 6px solid #28a745;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 6px solid #dc3545;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #222b30;
+    color: white;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
 
   </style>
 </head>
+
 <body>
 
   <header>
@@ -119,11 +152,13 @@
 
   <div class="container show">
 
-     <% questao.forEach(questao => { %>
+    <% questao.forEach(questao=> { %>
       <form action="/answer" method="post" class="question-form">
 
-        <div class="card-questao">         
-        <span><%= questao.id_question %>. <%= questao.title %></span>
+        <div class="card-questao">
+          <span>
+            <%= questao.id_question %>. <%= questao.title %>
+          </span>
           <div class="inputs">
             <div>
               <input type="radio" name="answer" value="1"> <span>Certo</span>
@@ -133,16 +168,28 @@
               <input type="radio" name="answer" value="0"> <span>Errado</span>
             </div>
           </div>
-        <input type="hidden" name="id_question" value="<%= questao.id_question %>">
-        <button class="btn" type="submit">Responder</button>
-      </div>
+          <input type="hidden" name="id_question" value="<%= questao.id_question %>">
+          <button class="btn" type="submit">Responder</button>
         </div>
-        
-      </form>
-      <% }) %>
-    </div>
+  </div>
 
-    <script src="/scripts/content.js"></script>
-      <%- include('./partials/footer.ejs') %>
+  </form>
+  <% }) %>
+
+    <% if (success.length> 0) { %>
+        <div class="alert alert-success">
+          <%= success %>
+        </div>
+    <% } %> 
+
+    <% if (error.length> 0) { %>
+          <div class="alert alert-danger">
+            <%= error %>
+          </div>
+    <% } %>
+
+  <script src="/scripts/content.js"></script>
+  <%- include('./partials/footer.ejs') %>
 </body>
+
 </html>

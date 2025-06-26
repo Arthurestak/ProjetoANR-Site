@@ -26,9 +26,7 @@ exports.index = async (req, res) => {
             thirdTitle: titles[2].name,
             subjects1: subjectsId1,
             subjects2: subjectsId2,
-            subjects3: subjectsId3
-
-            
+            subjects3: subjectsId3    
     });
 
 };
@@ -66,9 +64,7 @@ exports.questionScreen = async (req, res) =>  {
 
     res.render('questao', {
       questao,
-      id_content,
-      success: req.flash('success'),
-       error: req.flash('error')
+      id_content
     });
 
   }catch (error) {
@@ -89,12 +85,9 @@ exports.answerTretment = async (req, res) =>{
     );
     
     if(answer[0][0].answer != id_answer){
-      console.log('Resposta errada');
-      req.flash('error', 'Você errou uma resposta.');
-      
-      return;
+      req.flash('error', 'Você errou a resposta.');
+      return res.redirect(`/questao/${id_question}`); 
     }
-    console.log('Certa respota');
     req.flash('success', 'Você acertou a resposta.');
     res.redirect(`/questao/${id_question}`);
     
