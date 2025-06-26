@@ -53,7 +53,6 @@ exports.contentScreen = async (req, res) => {
 };
 
 exports.questionScreen = async (req, res) =>  {
-  
     const id_content = req.params.id;
     try {
     const banco = await connection();
@@ -61,9 +60,11 @@ exports.questionScreen = async (req, res) =>  {
       'SELECT * FROM questions WHERE id_content = ?', 
       [id_content]
     );
-
+    
+    const questaoSelecionada = questao.find(q => q.id_question );
+     
     res.render('questao', {
-      questao,
+      questao: questaoSelecionada,
       id_content
     });
 
@@ -76,7 +77,13 @@ exports.questionScreen = async (req, res) =>  {
 exports.answerTretment = async (req, res) =>{
   const id_question = req.body.id_question;
   const id_answer = req.body.answer;
- 
+  
+  if(!id_answer){
+    req.flash('error', 'Selecione uma alternativa');
+    return res.redirect(`/questao/${id_question}`); 
+    
+  }
+
   try{
     const banco = await connection();
     const answer  = await banco.execute(
@@ -96,3 +103,13 @@ exports.answerTretment = async (req, res) =>{
     res.status(500).send('Erro interno do servidor');
   }
 }
+
+exports.arrow = async (req, res) =>{
+  const arrowId = req.body.arrow;
+  console.log(arrowId);
+  if(arrowId == 1){
+    res.redirect(`/questao/3`);
+  }else{
+    res.send(`/questao/2`);
+  };
+};

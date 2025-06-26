@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Quiz - Certo ou Errado</title>
   <style>
     body {
@@ -137,7 +138,32 @@ footer {
     font-size: 0.9rem;
     margin-top: 2rem;
 }
+/* icon */
+@font-face { font-family: 
+  'Font Awesome 6 Free';
+   font-style: normal;
+    font-weight: 900;
+     font-display: 
+     block;
+      src: url("../webfonts/fa-solid-900.woff2");
+}
 
+.arrows{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 25px;
+}
+.fa-solid{
+  cursor: pointer;
+
+}
+input{
+  cursor: pointer;
+}
+.btn-arrow{
+  border: none;
+}
   </style>
 </head>
 
@@ -152,7 +178,6 @@ footer {
 
   <div class="container show">
 
-    <% questao.forEach(questao=> { %>
       <form action="/answer" method="post" class="question-form">
 
         <div class="card-questao">
@@ -174,20 +199,29 @@ footer {
   </div>
 
   </form>
-  <% }) %>
 
-    <% if (success.length> 0) { %>
-        <div class="alert alert-success">
-          <%= success %>
-        </div>
+  
+  <% if (success.length> 0) { %>
+    <div class="alert alert-success">
+      <%= success %>
+    </div>
     <% } %> 
-
+    
     <% if (error.length> 0) { %>
-          <div class="alert alert-danger">
-            <%= error %>
-          </div>
-    <% } %>
+      <div class="alert alert-danger">
+        <%= error %>
+      </div>
+      <% } %>
+      <div class="arrows">
 
+        <form action="/change/:id" method="post">
+          <button class="btn-arrow" type="submit"><input type="hidden" name="arrow" value="-1"><i class="fa-solid fa-arrow-left"></i></button>
+        </form>
+        
+        <form action="/change/:id" method="post">
+          <button class="btn-arrow" type="submit"><input type="hidden" name="arrow" value="1"><i class="fa-solid fa-arrow-right" ></i></button>
+        </form>
+      </div>
   <script src="/scripts/content.js"></script>
   <%- include('./partials/footer.ejs') %>
 </body>
