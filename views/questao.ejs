@@ -212,15 +212,24 @@ input{
         <%= error %>
       </div>
       <% } %>
+
       <div class="arrows">
 
         <form action="/change/:id" method="post">
           <button class="btn-arrow" type="submit"><input type="hidden" name="arrow" value="-1"><i class="fa-solid fa-arrow-left"></i></button>
+          <input type="hidden" name="id_question" value="<%= questao.id_question %>">
+          <input type="hidden" name="id_content" value="<%= questao.id_content %>">
+          
         </form>
         
         <form action="/change/:id" method="post">
-          <button class="btn-arrow" type="submit"><input type="hidden" name="arrow" value="1"><i class="fa-solid fa-arrow-right" ></i></button>
+          <button class="btn-arrow" type="submit"><input type="hidden" name="arrow" value="1"><i class="fa-solid fa-arrow-right"></i></button>
+          <input type="hidden" name="id_question" value="<%= questao.id_question %>">
+          <input type="hidden" name="id_content" value="<%= questao.id_content %>">
+
         </form>
+        
+        
       </div>
   <script src="/scripts/content.js"></script>
   <%- include('./partials/footer.ejs') %>

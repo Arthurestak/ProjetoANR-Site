@@ -74,6 +74,40 @@ exports.questionScreen = async (req, res) =>  {
   }
 };
 
+exports.indexQuestion = async (req, res) =>{
+  const arrowId = req.body.arrow;
+  const id_question = req.body.id_question;
+  const id_content = req.body.id_content;
+  const direction = Number(id_question) + Number(arrowId);
+  console.log(' ');
+  console.log(direction);
+  console.log(id_content);
+  console.log(' ');
+  
+  try {
+    const banco = await connection();
+    const [questao] = await banco.execute(
+      `SELECT * FROM questions WHERE id_question = ${direction} AND id_content = ${id_content}`, 
+
+    );
+    
+    const questaoSelecionada = questao.find(q => q.id_question );
+     console.log(' ');
+     console.log(questaoSelecionada);
+     console.log(' ');
+     
+    res.render('questao', {
+      questao: questaoSelecionada,
+      direction,
+      id_content
+    });
+
+  }catch (error) {
+    console.error('Erro ao buscar conteúdos:', error);
+    res.status(500).send('Erro interno do servidor');
+  }
+}
+
 exports.answerTretment = async (req, res) =>{
   const id_question = req.body.id_question;
   const id_answer = req.body.answer;
@@ -103,13 +137,3 @@ exports.answerTretment = async (req, res) =>{
     res.status(500).send('Erro interno do servidor');
   }
 }
-
-exports.arrow = async (req, res) =>{
-  const arrowId = req.body.arrow;
-  console.log(arrowId);
-  if(arrowId == 1){
-    res.redirect(`/questao/3`);
-  }else{
-    res.send(`/questao/2`);
-  };
-};
