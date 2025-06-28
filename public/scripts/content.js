@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const id = e.currentTarget.getAttribute('data-id');
 
       if(url.includes('conteudos')){
-        window.location.href = `/questao/${id}`; 
+        window.location.href = `/questao/${id}/1`; 
       }else{
         window.location.href = `/conteudos/${id}`; 
       }
