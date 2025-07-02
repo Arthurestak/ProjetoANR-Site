@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loja de Ebooks</title>
+    <link rel="stylesheet" href="/styles.css"/>
+    <link rel="stylesheet" href="/headerfooter.css" />
+    <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon" />
+</head>
+<body>
+    <%- include('./partials/header.ejs') %>
+
+    <main>
+        <div class="container">
+            <h1>📚 Nossos Ebooks</h1>
+
+            <% if (ebooks && ebooks.length > 0) { %>
+                <% ebooks.forEach(ebook => { %>
+                    <div class="card">
+                        <img src="/images/<%= ebook.imagem %>" alt="Capa do ebook <%= ebook.titulo %>" style="max-width: 300px; border-radius: 8px;" />
+                        <h2><%= ebook.titulo %></h2>
+                        <p><strong>Autor:</strong> <%= ebook.autor %></p>
+                        <p><strong>Preço:</strong> R$ <%= ebook.preco %></p>
+                        <a href="/produtos/ebook/<%= ebook.id %>" class="btn-start">Ver Detalhes</a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>🚧 Nenhum ebook disponível no momento. Volte em breve!</p>
+            <% } %>
+        </div>
+    </main>
+
+    <%- include('./partials/footer.ejs') %>
+
+    <script src="/scripts/script.js"></script>
+</body>
+</html>

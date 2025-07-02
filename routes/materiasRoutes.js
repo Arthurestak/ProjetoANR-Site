@@ -1,4 +1,4 @@
-const materiasController = require('./controllers/materiasController');
+const materiasController = require('../controllers/materiasController');
 const express = require('express');
 const router = express.Router();
 
@@ -8,5 +8,4 @@ router.get('/questao/:id_content/:id_question', materiasController.questionScree
 router.post('/answer',  materiasController.answerTretment);
 router.post('/change/:id', materiasController.indexQuestion)
 
-    
 module.exports = router;

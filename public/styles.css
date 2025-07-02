@@ -4,46 +4,6 @@ body {
     background-color: #f8f9fc;
 }
 
-/* HEADER */
-header {
-    background-color: #222b30;
-    color: #ffffff;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    width: 100%;
-    z-index: 1000
-}
-
-/* CONTEÚDO DO HEADER */
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 1100px;
-    height: 80px;
-}
-
-/* HEADER ESQUERDA */
-.header-left h1 {
-    font-size: 1.8rem;
-    margin: 0;
-}
-
-.header-left a {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-/* HEADER DIREITA (BOTÕES LOGIN e SIGNUP) */
-.header-right {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-
 /* BOTÃO DE LOGIN */
 .btn-login {
     background-color: transparent;
@@ -72,70 +32,6 @@ header {
 
 .btn-signup:hover {
     background-color: #3b4952;
-}
-
-/* SIDEBAR */
-.sidebar {
-    position: fixed;
-    left: -250px; /* COMEÇA OCULTO (-250px PARA ESQUERDA) */
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #222b30;
-    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.5);
-    transition: left 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    padding-top: 2rem;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    display: block;
-    transition: background 0.3s ease;
-    padding: 0.75rem;
-    text-align: justify;
-    border: none;
-    border-width: 0.15rem;
-}
-
-.sidebar ul li a:hover {
-    background: #ffffff33;
-
-}
-
-/* BOTÃO DE ABRIR E FECHAR */
-.sidebar-toggle {
-    font-size: 1.5rem;
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    left: 20px;
-}
-
-.close-sidebar {
-    font-size: 2rem;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 10px;
-}
-
-/* SIDEBAR ABERTO */
-.sidebar.active {
-    left: 0;
 }
 
 /* MAIN */
@@ -213,14 +109,4 @@ main {
 
 .btn-start:hover {
     background-color: #141a1d;
-}
-
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: #222b30;
-    color: white;
-    font-size: 0.9rem;
-    margin-top: 2rem;
 }
