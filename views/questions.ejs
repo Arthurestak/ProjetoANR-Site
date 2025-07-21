@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Quiz - Certo ou Errado</title>
+  <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon">
+  <link rel="stylesheet" href="/questao.css">
+</head>
+
+<body>
+
+  <%- include('./partials/header.ejs') %>
+    <main class="main-content">
+      <div class="section-title">Perguntas</div>
+
+      <div class="container show">
+        <div class="filtro-container">
+          <div class="filtro-header" onclick="filter()">
+            <h2>Filtro</h2>
+            <span id="seta">▼</span>
+          </div>
+          <form action="/questions-list" method="post" class="filtro-conteudo" id="filtro"> 
+            <div class="filtro-grid">
+              <div class="options">
+                <input type="text"  placeholder="Disciplinas" class="disciplinas" >
+                <select id="disciplinas" name="disciplinas" multiple class="disciplinas-multiplas">
+                    <option class="option option-disciplina" value="Lesgislação Específica">Lesgislação Específica</option>
+                    <option class="option option-disciplina" value="Lesgislação">Lesgislação</option>
+                    <option class="option option-disciplina" value="Jurisprudêcia">Jurisprudêcia</option>              
+                </select>
+              </div>
+
+              <div class="options">
+                <input type="text" placeholder="Conteúdo" class="conteudos">
+                 <select id="conteudos" name="conteudos" multiple class="conteudos-multiplas">
+                    <option class="option option-conteudo" value="Teoria Geral do Direito Notorial e Registral">Teoria Geral do Direito Notorial e Registral</option>
+                    <option class="option option-conteudo" value="Tabelionato">Tabelionato</option>                 
+                    <option class="option option-conteudo" value="Registro Civil">Registro Civil</option>
+                    <option class="option option-conteudo" value="Legislação">Legislação</option>
+                    <option class="option option-conteudo" value="Jurisprudência">Jurisprudência</option>
+                </select>
+              </div>
+                        
+              <div class="options">
+                <input type="text" placeholder="Tipo" class="tipo-questao">
+                  <select id="type" name="type" multiple class="tipo-multiplas">
+                    <option  class="option option-tipo" value="Certo e Errado">Certo e Errado</option>
+                    <option  class="option option-tipo" value="Multipla Escolha">Multipla Escolha</option>
+                    
+                </select>
+              </div>
+
+            </div>
+         
+            <button class="btn-buscar">Buscar</button>
+          </form>
+        </div>
+      </div>
+
+      <section class="question-list">
+
+        <form action="/answer" method="post" class="question-form">
+           <div class="card-questao">
+              <div class="pergunta">
+                1. O tabelião de notas possui fé pública e tem como atribuição principal a prática de atos jurídicos com eficácia probatória, como escrituras, procurações e testamentos.
+            </div>
+
+            <div class="alternativas">
+              <label><input type="radio" name="resposta" value="a"> A) Lavratura de escrituras e procurações</label>
+              <label><input type="radio" name="resposta" value="b"> B) Fiscalização de cartórios</label>
+              <label><input type="radio" name="resposta" value="c"> C) Representação do Ministério Público</label>
+              <label><input type="radio" name="resposta" value="d"> D) Julgamento de ações judiciais</label>
+            </div>
+
+            <button type="submit" class="responder-btn">Responder</button>
+
+            
+            <% if (success.length> 0) { %>
+              <div class="alert alert-success">
+                <%= success %>
+              </div>
+            <% } %>
+            <% if (error.length> 0) { %>
+                <div class="alert alert-danger">
+                  <%= error %>
+                </div>
+              <% } %>
+
+          </div>
+        </form>
+
+        <% question.forEach(question=>{ %>
+          <form action="/answer" method="post" class="question-form">
+            <div class="card-questao">
+              <span>
+                <%= question.id_question %>. <%= question.title %>
+              </span>
+           <div class="alternativas">
+              <label><input type="radio" name="resposta" value="c"> Certo</label>
+              <label><input type="radio" name="resposta" value="d"> Errado</label>
+            </div>
+
+            <button type="submit" class="responder-btn">Responder</button>
+            
+            
+            <% if (success.length> 0) { %>
+              <div class="alert alert-success">
+                <%= success %>
+              </div>
+            <% } %>
+            <% if (error.length> 0) { %>
+                <div class="alert alert-danger">
+                  <%= error %>
+                </div>
+              <% } %>
+
+            </div>
+            </form>
+          <%});%>
+
+          
+
+          
+      </section>
+    </main>
+
+    <script src="scripts/question.js"></script>
+    <script src="scripts/script.js"></script>
+    <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

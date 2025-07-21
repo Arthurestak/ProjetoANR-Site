@@ -6,9 +6,9 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 // ROTAS
-const materiasRoutes = require('./routes/materiasRoutes');
+const questionRoutes = require('./routes/questionRoutes');
 const ebookRoutes = require('./routes/ebookRoutes');
-
+const mentoriaRoutes = require('./routes/mentoriaRoutes');
 const app = express();
 
 // BANCO DE DADOS
@@ -83,8 +83,9 @@ app.post('/login', (req, res) => {
 });
 
 // ROTAS EXTERNAS
-app.use(materiasRoutes);
+app.use(questionRoutes);
 app.use(ebookRoutes);
+app.use(mentoriaRoutes);
 
 // SERVIDOR
 const PORT = 3000;
