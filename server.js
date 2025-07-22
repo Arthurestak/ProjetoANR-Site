@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 const questionRoutes = require('./routes/questionRoutes');
 const ebookRoutes = require('./routes/ebookRoutes');
 const mentoriaRoutes = require('./routes/mentoriaRoutes');
+
 const app = express();
 
 // BANCO DE DADOS
@@ -53,19 +54,25 @@ app.set('views', path.join(__dirname, 'views'));
 
 // PÁGINAS ESTÁTICAS
 app.get('/', (req, res) => res.render('index'));
-app.get('/login', (req, res) => res.render('login'));
+app.get('/login', (req, res) => {
+    // Apenas renderiza — não consome a flash
+    res.render('login');
+});
 app.get('/signup', (req, res) => res.render('signup'));
 app.get('/codigoComentado', (req, res) => res.render('codigoComentado'));
+app.get('/avisos', (req, res) => res.render('avisos'));
+app.get('/contato', (req, res) => res.render('contato'));
 
-// ROTA FORMULÁRIOS
+// FORMULÁRIOS: Cadastro e Login
 app.post('/signup', (req, res) => {
     const { name, email, password } = req.body;
     const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
     db.query(query, [name, email, password], (err) => {
         if (err) {
-            console.error('Erro ao cadastrar usuário:', err);
-            return res.send('Erro ao cadastrar.');
+            req.flash('error', 'Erro ao cadastrar usuário. Tente novamente.');
+            return res.redirect('/signup');
         }
+        req.flash('success', 'Cadastro realizado com sucesso! Faça login abaixo.');
         res.redirect('/login');
     });
 });
@@ -75,10 +82,11 @@ app.post('/login', (req, res) => {
     const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
     db.query(query, [email, password], (err, result) => {
         if (err || result.length === 0) {
-            console.error('Erro ao autenticar usuário:', err);
-            return res.send('Login inválido.');
+            req.flash('error', 'Email ou senha incorretos.');
+            return res.redirect('/login');
         }
-        res.send('Login bem-sucedido!');
+        req.flash('success', 'Login bem-sucedido!');
+        res.redirect('/');
     });
 });
 
@@ -90,5 +98,5 @@ app.use(mentoriaRoutes);
 // SERVIDOR
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+    console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
