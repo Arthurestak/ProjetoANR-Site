@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
-
+const csrf = require('csurf');
 // ROTAS
 const questionRoutes = require('./routes/questionRoutes');
 const ebookRoutes = require('./routes/ebookRoutes');
@@ -43,10 +43,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// MIDDLEWARES
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 // EJS CONFIGURAÇÃO
 app.set('view engine', 'ejs');
@@ -66,7 +62,7 @@ app.get('/contato', (req, res) => res.render('contato'));
 // FORMULÁRIOS: Cadastro e Login
 app.post('/signup', (req, res) => {
     const { name, email, password } = req.body;
-    const query = 'INSERT INTO users (name, email, password) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO pessoa (nome, email, senha) VALUES (?, ?, ?)';
     db.query(query, [name, email, password], (err) => {
         if (err) {
             req.flash('error', 'Erro ao cadastrar usuário. Tente novamente.');
@@ -94,6 +90,13 @@ app.post('/login', (req, res) => {
 app.use(questionRoutes);
 app.use(ebookRoutes);
 app.use(mentoriaRoutes);
+
+// MIDDLEWARES
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+const { checkCsrfError } = require('./middlewares/middleware');
+app.use(checkCsrfError);
 
 // SERVIDOR
 const PORT = 3000;

@@ -14,9 +14,9 @@ async function connection() {
 
 exports.index = async (req, res) =>{
     const banco = await connection();
-    const [ questions ] = await banco.execute('SELECT * FROM questions;');
+    const [ questions ] = await banco.execute('SELECT * FROM questao;');
     
-    res.render('questions', {
+    res.render('questao', {
       question: questions
     });   
 }  
