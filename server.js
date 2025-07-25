@@ -58,6 +58,7 @@ app.get('/signup', (req, res) => res.render('signup'));
 app.get('/codigoComentado', (req, res) => res.render('codigoComentado'));
 app.get('/avisos', (req, res) => res.render('avisos'));
 app.get('/contato', (req, res) => res.render('contato'));
+app.get('/enac2025-2', (req, res) => res.render('enac2025-2'));
 
 // FORMULÁRIOS: Cadastro e Login
 app.post('/signup', (req, res) => {
@@ -97,6 +98,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 const { checkCsrfError } = require('./middlewares/middleware');
 app.use(checkCsrfError);
+
+// MATERIAIS
+app.use('/materiais.json', express.static(path.join(__dirname, 'Professor-Dashboard/materiais.json')));
+app.use('/uploads', express.static(path.join(__dirname, 'Professor-Dashboard/public/uploads')));
 
 // SERVIDOR
 const PORT = 3000;

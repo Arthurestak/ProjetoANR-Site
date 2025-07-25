@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Adicionar Material</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <%- include('./partials/headerProfessor.ejs') %>
+  <div class="containerUpload">
+    <h1>➕ Enviar PDF</h1>
+    <form action="/upload/pdf" method="POST" enctype="multipart/form-data">
+    <div class="drop-zone" id="dropZone">
+        <span>Arraste o PDF aqui ou clique para selecionar</span>
+        <input type="file" name="pdfFile" accept=".pdf" required />
+    </div>
+    <input type="text" name="pdfName" placeholder="Nome do PDF" required />
+    <button type="submit">Enviar PDF</button>
+    </form>
+  </div>
+
+  <div class="containerUpload">
+    <h1>➕ Adicionar Videoaula</h1>
+    <form action="/upload/video" method="POST">
+      <input type="text" name="videoTitle" placeholder="Título da aula" required />
+      <input type="url" name="videoURL" placeholder="URL do vídeo YouTube" required />
+      <button type="submit">Salvar Vídeo</button>
+    </form>
+  </div>
+  <script>
+    function toggleSidebar() {
+      document.getElementById('sidebarDashboard').classList.toggle('show');
+    }
+  </script>
+</body>
+</html>
