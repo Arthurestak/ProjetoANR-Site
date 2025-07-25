@@ -67,3 +67,84 @@ document.addEventListener('click', e =>{
     }
 
 });
+
+function verificarResposta(id_questao) {
+    const radios = document.querySelectorAll(`input[name="resposta-${id_questao}"]`);
+    const feedbackDiv = document.getElementById(`feedback-${id_questao}`);
+    let respostaSelecionada = null;
+
+    radios.forEach(radio => {
+        if (radio.checked) {
+            respostaSelecionada = radio;
+        }
+    });
+    
+    if (!respostaSelecionada) {
+        feedbackDiv.innerHTML = "<div class='alert alerta-alerta'>Por favor, selecione uma alternativa.</div>";
+        feedbackDiv.style.display = 'block'
+        feedbackDiv.style.backgroundColor = '#c42b3bff';
+        return;
+    }
+
+    const isCorrect = respostaSelecionada.dataset.answer === "1";
+    const letraSelecionada = respostaSelecionada.dataset.label;
+
+    if (isCorrect) {
+        feedbackDiv.style.display = 'block'
+        feedbackDiv.style.backgroundColor = '#2aaf49ff';
+      feedbackDiv.innerHTML = `
+        <div class="alert alert-successo">
+          <span class="icon">🎉</span>
+          <strong>Boa, Você acertou!</strong><br>
+          Você escolheu a alternativa <strong>${letraSelecionada}</strong> que é a alternativa correta para essa questão
+        </div>
+      `;
+    } else {
+      const alternativaCorreta = Array.from(radios).find(r => r.dataset.answer === "1");
+      const letraCorreta = alternativaCorreta.dataset.label;
+      feedbackDiv.style.display = 'block'
+    feedbackDiv.style.backgroundColor = '#c42b3bff';
+      feedbackDiv.innerHTML = `
+        <div class="alert alert-erro">
+          <span class="icon">⚠️</span>
+          <strong>Deu ruim, Você errou!</strong><br>
+          A alternativa correta é a <strong>${letraCorreta}</strong>
+        </div>
+      `;
+    }
+  }
+
+function getSelectedValues(selectElement) {
+    const selected = [];
+    const options = selectElement && selectElement.options;
+    for (let i = 0; i < options.length; i++) {
+    if (options[i].selected) {
+        selected.push(options[i].value);
+    }
+    }
+    return selected;
+}
+function search() {
+
+  const selectedDisciplinas = Array.from(document.querySelector('#disciplinas').selectedOptions).map(opt => opt.value);
+  const selectedConteudos = Array.from(document.querySelector('#conteudos').selectedOptions).map(opt => opt.value);
+  const selectedTipos = Array.from(document.querySelector('#type').selectedOptions).map(opt => opt.value);
+
+  const cards = document.querySelectorAll('.card-questao');
+
+  cards.forEach(card => {
+    const disciplina = card.dataset.disciplina;
+    const conteudo = card.dataset.conteudo;
+    const tipo = card.dataset.tipo;
+
+    const matchDisciplina = selectedDisciplinas.length === 0 || selectedDisciplinas.includes(disciplina);
+    const matchConteudo = selectedConteudos.length === 0 || selectedConteudos.includes(conteudo);
+    const matchTipo = selectedTipos.length === 0 || selectedTipos.includes(tipo);
+
+    const deveMostrar = matchDisciplina && matchConteudo && matchTipo;
+
+    card.style.display = deveMostrar ? 'block' : 'none';
+  });
+
+
+}
