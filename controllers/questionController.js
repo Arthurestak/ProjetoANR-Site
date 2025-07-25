@@ -15,14 +15,15 @@ async function connection() {
 exports.index = async (req, res) =>{
     const banco = await connection();
     const [ questions ] = await banco.execute('SELECT * FROM questao;');
+    const [ alternatives ] = await banco.execute('SELECT * FROM alternativas;')
+    const [ conteudos ] = await banco.execute('SELECT * FROM conteudo;')
+    const [ discplinas ] = await banco.execute('SELECT * FROM disciplina;')
     
-    res.render('questao', {
-      question: questions
+    res.render('questions', {
+      disciplinas: discplinas,
+      conteudos: conteudos,
+      questions: questions,
+      alternatives: alternatives
     });   
 }  
 
-exports.filter = (req, res) =>{
-  const filter = req.body;
-  res.send(filter);
-  console.log(filter);
-}
