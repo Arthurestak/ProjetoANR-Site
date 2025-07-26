@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Adicionar Material</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon">
+
+</head>
+<body>
+  <%- include('./partials/headerProfessor.ejs') %>
+  <div class="containerUpload">
+    <h1>➕ Enviar PDF</h1>
+    <form action="/upload/pdf" method="POST">
+      <input type="text" name="pdfTitle" placeholder="Título do material" required />
+      <input type="url" name="pdfURL" placeholder="URL do material PDF" required />
+
+    <button type="submit">Enviar PDF</button>
+    </form>
+  </div>
+
+  <div class="containerUpload">
+    <h1>➕ Adicionar Videoaula</h1>
+    <form action="/upload/video" method="POST">
+      <input type="text" name="videoTitle" placeholder="Título da aula" required />
+      <input type="url" name="videoURL" placeholder="URL do vídeo YouTube" required />
+      <button type="submit">Salvar Vídeo</button>
+    </form>
+  </div>
+
+  <div class="containerQuestoes">
+  <h1>➕ Cadastrar Questão</h1>
+  <form action="/upload/questao" method="POST">
+    <!-- Tipo de Questão -->
+    <label for="tipo">Qual o conteudo dessa questão?</label>
+    <select name="id_conteudo" id="conteudo" required>
+      <% conteudos.forEach(conteudo =>{%>
+        <option value="<%= conteudo.id_conteudo %>"><%= conteudo.conteudo %></option>
+     <% }) %>
+    </select>
+    <!-- Tipo de Questão -->
+    <label for="tipo">Tipo de Questão</label>
+    <select name="tipo_questao" id="tipo" required>
+      <option value="2">Múltipla Escolha</option>
+      <option value="1">Certo ou Errado</option>
+    </select>
+
+    <!-- Enunciado -->
+    <label for="enunciado">Enunciado da Questão</label>
+    <textarea id="enunciado" name="enunciado" rows="3" required></textarea>
+
+    <!-- Alternativas Múltipla Escolha -->
+    <div class="alternativas">
+    <div class="blocoMultipla">
+      <label>Alternativa A</label>
+      <input type="text" name="altA" required />
+
+      <label>Alternativa B</label>
+      <input type="text" name="altB" required />
+
+      <label>Alternativa C</label>
+      <input type="text" name="altC" required />
+
+      <label>Alternativa D</label>
+      <input type="text" name="altD" required />
+
+      <label for="correta">Alternativa Correta</label>
+      <select name="correta" id="correta" required>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+      </select>
+    </div>
+    </div>
+
+    <!-- Alternativa Certo/Errado -->
+    <div id="blocoCE" style="display: none;">
+      <label for="respCE">Resposta</label>
+      <select name="respCE" id="respCE">
+        <option value="1">Certo</option>
+        <option value="0">Errado</option>
+      </select>
+    </div>
+
+    <button type="submit">Cadastrar Questão</button>
+  </form>
+</div>
+
+  <script>
+      const tipoSelect = document.querySelector('#tipo');
+      const blocoMultipla = document.querySelector('.blocoMultipla');
+      const blocoCE = document.querySelector('#blocoCE');
+      const alternativasInputs = blocoMultipla.querySelectorAll('input');
+
+      tipoSelect.addEventListener('change', () => {
+        console.log('change');
+        
+        if (tipoSelect.value === '1') {
+          blocoMultipla.style.display = 'none';
+          blocoCE.style.display = 'block';
+
+          alternativasInputs.forEach(input => {
+          input.setAttribute('disabled', '');
+          input.removeAttribute('required');
+           });
+        } else {
+          blocoMultipla.style.display = 'block';
+          blocoCE.style.display = 'none';
+          alternativasInputs.forEach(input => {
+            input.removeAttribute('disabled');
+            input.setAttribute('required', '');
+          });
+        }
+        });
+
+    function toggleSidebar() {
+      document.getElementById('sidebarDashboard').classList.toggle('show');
+    }
+  </script>
+</body>
+</html>
