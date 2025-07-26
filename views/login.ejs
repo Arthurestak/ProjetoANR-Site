@@ -12,24 +12,30 @@
 
 <body>
     <%- include('./partials/headerNaoLogado.ejs') %>
-
-    <% if (success) { %>
-      <div class="flash success"><%= success %></div>
-    <% } %>
-
-    <% if (error) { %>
-      <div class="flash error"><%= error %></div>
-    <% } %>
-
+    
+    
     <main>
-        <div class="auth-container">
+      <div class="auth-container">
+          
+          <% if (success && success.length > 0) { %>
+            <% success.forEach(msg => { %>
+              <div class="flash success"><%= msg %></div>
+            <% }) %>
+          <% } %>
+          
+          <% if (errors && errors.length > 0) { %>
+            <% errors.forEach(msg => { %>
+              <div class="flash error"><%= msg %></div>
+            <% }) %>
+          <% } %>
+          
             <h1>Login</h1>
             <form action="/login" method="POST">
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required>
 
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="senha">Senha:</label>
+                <input type="password" id="password" name="senha" required>
 
                 <button type="submit" class="btn-auth">Entrar</button>
             </form>

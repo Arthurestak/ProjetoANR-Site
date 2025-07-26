@@ -13,7 +13,7 @@
   </style>
 </head>
 <body>
-  <%- include('./partials/headerNaoLogado.ejs') %>
+  <%- include('./partials/header.ejs') %>
 
   <main>
     <div class="container">
@@ -23,58 +23,37 @@
         <span class="spanContainer">PDFs e Videoaulas para turbinar seus estudos</span>
       </div>
 
-      <div id="pdf-section" class="card"></div>
-      <div id="video-section" class="card"></div>
+      <div id="pdf-section" class="card">
+        <% if(!pdfs.length){  %>
+            <h2>Nenhum material disponível.</h2>
+            <% }else{ %>
+              <h2>Materiais disponíveis.</h2>
+        <%  } %>
+        <% pdfs.forEach(pdf => { %>
+          <div class="material-item spanContainer"><strong><%= pdf.titulo %></strong><br>
+          <a href="<%= pdf.material %>"  target="_blank">Visualizar PDF</a></div>
+        
+      <% });%>
+      </div>
+      <div id="video-section" class="card">
+
+        <% if(!videos.length){  %>
+            <h2>Nenhuma videoaula disponível.</h2>
+            <% }else{ %>
+              <h2>Videoaulas disponíveis.</h2>
+        <%  } %>
+        <% videos.forEach(video => { %>
+          <h3><%= video.titulo %></h3>
+          <iframe src="<%= video.material %>" allowfullscreen></iframe>
+        
+      <% });%>
+      </div>
     </div>
   </main>
 
   <%- include('./partials/footer.ejs') %>
 
-  <script>
-    async function fetchMateriais() {
-      try {
-        const res = await fetch('/materiais.json');
-        const data = await res.json();
-
-        const pdfSection = document.getElementById('pdf-section');
-        const videoSection = document.getElementById('video-section');
-
-        if (data.pdfs?.length) {
-          const title = document.createElement('h2');
-          title.textContent = "📄 PDFs Disponíveis";
-          pdfSection.appendChild(title);
-
-          data.pdfs.forEach(pdf => {
-            const div = document.createElement('div');
-            div.className = "material-item spanContainer";
-            div.innerHTML = `<strong>${pdf.name}</strong><br><a href="${pdf.link}" target="_blank">Visualizar PDF</a>`;
-            pdfSection.appendChild(div);
-          });
-        }
-
-        if (data.videos?.length) {
-          const title = document.createElement('h2');
-          title.textContent = "🎬 Videoaulas";
-          videoSection.appendChild(title);
-
-          data.videos.forEach(video => {
-            const title = document.createElement('h3');
-            title.textContent = video.title;
-            videoSection.appendChild(title);
-
-            const frame = document.createElement('iframe');
-            frame.src = video.url;
-            frame.allowFullscreen = true;
-            videoSection.appendChild(frame);
-          });
-        }
-      } catch (error) {
-        console.error("Erro ao buscar materiais:", error);
-      }
-    }
-
-    fetchMateriais();
-  </script>
+ 
   <script src="/scripts/script.js"></script>
 </body>
 </html>

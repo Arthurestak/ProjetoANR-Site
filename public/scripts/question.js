@@ -114,37 +114,4 @@ function verificarResposta(id_questao) {
     }
   }
 
-function getSelectedValues(selectElement) {
-    const selected = [];
-    const options = selectElement && selectElement.options;
-    for (let i = 0; i < options.length; i++) {
-    if (options[i].selected) {
-        selected.push(options[i].value);
-    }
-    }
-    return selected;
-}
-function search() {
 
-  const selectedDisciplinas = Array.from(document.querySelector('#disciplinas').selectedOptions).map(opt => opt.value);
-  const selectedConteudos = Array.from(document.querySelector('#conteudos').selectedOptions).map(opt => opt.value);
-  const selectedTipos = Array.from(document.querySelector('#type').selectedOptions).map(opt => opt.value);
-
-  const cards = document.querySelectorAll('.card-questao');
-
-  cards.forEach(card => {
-    const disciplina = card.dataset.disciplina;
-    const conteudo = card.dataset.conteudo;
-    const tipo = card.dataset.tipo;
-
-    const matchDisciplina = selectedDisciplinas.length === 0 || selectedDisciplinas.includes(disciplina);
-    const matchConteudo = selectedConteudos.length === 0 || selectedConteudos.includes(conteudo);
-    const matchTipo = selectedTipos.length === 0 || selectedTipos.includes(tipo);
-
-    const deveMostrar = matchDisciplina && matchConteudo && matchTipo;
-
-    card.style.display = deveMostrar ? 'block' : 'none';
-  });
-
-
-}

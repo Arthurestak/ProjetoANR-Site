@@ -113,20 +113,37 @@ main {
 }
 
 /* FLASH MESSAGES */
-
+/* Container geral das mensagens flash */
 .flash {
-    margin-bottom: 1rem;
-    padding: 1rem;
-    border-radius: 6px;
-    font-weight: bold;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  max-width: 600px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+/* Mensagem de sucesso */
 .flash.success {
-    background-color: #d4edda;
-    color: #155724;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
 }
 
+/* Mensagem de erro */
 .flash.error {
-    background-color: #f8d7da;
-    color: #721c24;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Animação simples para aparecer suavemente */
+.flash {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
 }

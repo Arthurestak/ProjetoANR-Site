@@ -28,28 +28,31 @@
               <div class="options">
                 <input type="text" placeholder="Disciplinas" class="disciplinas">
                 <select id="disciplinas" name="disciplinas" multiple class="disciplinas-multiplas">
-                  <% disciplinas.forEach(disciplina =>{ %>
-                      <option class="option option-disciplina" value="<%= disciplina.id_disciplina %>"><%= disciplina.disciplina %></option>
-                  <% }); %>
-                  
+                  <% disciplinas.forEach(disciplina=>{ %>
+                    <option class="option option-disciplina" value="<%= disciplina.id_disciplina %>">
+                      <%= disciplina.disciplina %>
+                    </option>
+                    <% }); %>
+
                 </select>
               </div>
 
               <div class="options">
-                <input type="text" placeholder="Conteúdo" class="conteudos">
+                <input type="text" placeholder="Conteúdo" class="conteudos" readonly>
                 <select id="conteudos" name="conteudos" multiple class="conteudos-multiplas">
-                   <% conteudos.forEach(conteudo =>{ %>
-                      <option class="option option-conteudo" value="<%= conteudo.id_conteudo %>"><%= conteudo.conteudo %></option>
-                  <% }); %>
+                  <% conteudos.forEach(conteudo=> { %>
+                    <option class="option option-conteudo" value="<%= conteudo.id_conteudo %>">
+                      <%= conteudo.conteudo %>
+                    </option>
+                    <% }); %>
                 </select>
               </div>
 
               <div class="options">
-                <input type="text" placeholder="Tipo" class="tipo-questao">
+                <input type="text" placeholder="Tipo" class="tipo-questao" readonly>
                 <select id="type" name="type" multiple class="tipo-multiplas">
                   <option class="option option-tipo" value="1">Certo e Errado</option>
                   <option class="option option-tipo" value="2">Multipla Escolha</option>
-
                 </select>
               </div>
 
@@ -61,10 +64,8 @@
       <div class="feedback"></div>
       <section class="question-list">
         <% questions.forEach(question=>{ %>
-          <div class="card-questao"  
-          data-disciplina="<%= question.id_disciplina || '' %>"
-          data-conteudo="<%= question.id_conteudo || '' %>"
-          data-tipo="<%= question.type || '' %>">
+          <div class="card-questao" data-disciplina="<%= question.id_disciplina || '' %>"
+            data-conteudo="<%= question.id_conteudo || '' %>" data-tipo="<%= question.type || '' %>">
             <div class="question">
 
               <span>

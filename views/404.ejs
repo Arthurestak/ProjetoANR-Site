@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-      <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="/styles.css">
-            <link rel="stylesheet" href="/headerfooter.css">
-            <title>404</title>
-      </head>
- 
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/headerfooter.css" />
+    <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon" />
+</head>
 <body>
-      <h1>Pagina não encontrada!</h1>      
-      
-</body>
+    <%- include('./partials/header.ejs') %>
 
+    <main>
+        <div class="container">
+            <h1>⚠️404</h1>
+            <p>Esta página não foi encontrada!</p>
+        </div>
+    </main>
+
+    <%- include('./partials/footer.ejs') %>
+
+    <script src="/scripts/script.js"></script>
+</body>
 </html>

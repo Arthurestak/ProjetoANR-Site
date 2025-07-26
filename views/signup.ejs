@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,41 +10,48 @@
     <link rel="stylesheet" href="/headerfooter.css">
     <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon">
 </head>
+
 <body>
     <%- include('./partials/headerNaoLogado.ejs') %>
 
-    <% if (success) { %>
-      <div class="flash success"><%= success %></div>
-    <% } %>
+       
+                                        <main>
+                                            
+                                            <div class="auth-container">
+                                                
+                                                  <% if (success && success.length > 0) { %>
+                                                            <% success.forEach(msg => { %>
+                                                              <div class="flash success"><%= msg %></div>
+                                                            <% }) %>
+                                                          <% } %>
+                                                          
+                                                          <% if (errors && errors.length > 0) { %>
+                                                            <% errors.forEach(msg => { %>
+                                                              <div class="flash error"><%= msg %></div>
+                                                            <% }) %>
+                                                          <% } %>
+                                                <h1>SignUp</h1>
+                                                <form action="/signup" method="POST">
+                                                    <label for="name">Nome:</label>
+                                                    <input type="text" id="name" name="name" required>
 
-    <% if (error) { %>
-      <div class="flash error"><%= error %></div>
-    <% } %>
+                                                    <label for="email">E-mail:</label>
+                                                    <input type="email" id="email" name="email" required>
 
+                                                    <label for="password">Senha:</label>
+                                                    <input type="password" id="password" name="password" required>
 
-    <main>
-        <div class="auth-container">
-            <h1>SignUp</h1>
-            <form action="/signup" method="POST">
-                <label for="name">Nome:</label>
-                <input type="text" id="name" name="name" required>
+                                                    <button type="submit" class="btn-auth">Cadastrar</button>
+                                                </form>
+                                                <p>Já tem uma conta? <a href="/login">Faça login</a></p>
+                                            </div>
+                                        </main>
 
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" required>
+                                        <%- include('./partials/footer.ejs') %>
 
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-
-                <button type="submit" class="btn-auth">Cadastrar</button>
-            </form>
-            <p>Já tem uma conta? <a href="/login">Faça login</a></p>
-        </div>
-    </main>
-
-    <%- include('./partials/footer.ejs') %>
-
-    <script src="/scripts/script.js"></script>
-    <script src="/scripts/auth.js"></script>
+                                            <script src="/scripts/script.js"></script>
+                                            <script src="/scripts/auth.js"></script>
 
 </body>
+
 </html>

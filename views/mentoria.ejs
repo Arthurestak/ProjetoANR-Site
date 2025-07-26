@@ -1,59 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Mentoria com Cronograma</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon">
-  <link rel="stylesheet" href="/mentoria.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentoria</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/headerfooter.css" />
+    <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon" />
 </head>
 <body>
-  <header>
-    <h1>Mentoria</h1>
-    <p>Acompanhamento personalizado para sua evolução</p>
-  </header>
+    <%- include('./partials/header.ejs') %>
 
-  <h2 class="section-title">Cronograma da Mentoria</h2>
-  <section class="container timeline">
-    <div class="timeline-event">
-      <h4>Semana 1 - Diagnóstico</h4>
-      <p>Análise dos objetivos e dificuldades do aluno.</p>
-    </div>
-    <div class="timeline-event">
-      <h4>Semana 2 - Plano de Ação</h4>
-      <p>Montagem de plano de estudos e metas práticas.</p>
-    </div>
-    <div class="timeline-event">
-      <h4>Semana 3 - Execução Guiada</h4>
-      <p>Acompanhamento com revisão de atividades e feedbacks.</p>
-    </div>
-    <div class="timeline-event">
-      <h4>Semana 4 - Avaliação</h4>
-      <p>Teste final, revisão de progresso e próximos passos.</p>
-    </div>
-  </section>
+    <main>
+        <div class="container">
+            <h1>🚧 Em breve: Mentoria</h1>
+            <p>Esta página será atualizada com detalhes sobre nossa mentoria!</p>
+        </div>
+    </main>
 
-  <h2 class="section-title">Metas da Mentoria</h2>
-  <section class="container goals">
-    <ul>
-      <li>Definir um plano de estudos personalizado</li>
-      <li>Dominar as ferramentas e metodologias propostas</li>
-      <li>Aplicar os aprendizados em projetos reais</li>
-      <li>Obter feedback contínuo e construtivo</li>
-      <li>Ganhar confiança e autonomia na área</li>
-    </ul>
-  </section>
+    <%- include('./partials/footer.ejs') %>
 
-  <footer>
-    Plataforma de Cursos © 2025 | Mentoria com propósito
-  </footer>
-
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.container, .section-title').forEach(el => {
-        el.classList.add('show');
-      });
-    });
-  </script>
+    <script src="/scripts/script.js"></script>
 </body>
 </html>

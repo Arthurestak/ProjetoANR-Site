@@ -16,9 +16,9 @@ async function connection() {
 exports.index = async (req, res) => {
   try {
     const banco = await connection();
-    const [ebooks] = await banco.execute('SELECT * FROM ebooks');
+    const [ebooks] = await banco.execute('SELECT * FROM materiais');
 
-    res.render('produtos-ebook', { ebooks });
+    res.render('ebook', { ebooks });
 
   } catch (error) {
     console.error('Erro ao buscar ebooks:', error);
@@ -33,7 +33,7 @@ exports.show = async (req, res) => {
   try {
     const banco = await connection();
     const [result] = await banco.execute(
-      'SELECT * FROM ebooks WHERE id = ?',
+      'SELECT * FROM materiais WHERE id_material = ?',
       [id]
     );
 
@@ -41,7 +41,7 @@ exports.show = async (req, res) => {
       return res.status(404).send('Ebook não encontrado');
     }
 
-    res.render('ebook-detalhes', { ebook: result[0] });
+    res.render('ebook', { ebook: result[0] });
 
   } catch (error) {
     console.error('Erro ao carregar detalhes do ebook:', error);

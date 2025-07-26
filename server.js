@@ -4,99 +4,75 @@ const mysql = require('mysql2');
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
-const csrf = require('csurf');
+const cors = require('cors');
+
+
 // ROTAS
 const questionRoutes = require('./routes/questionRoutes');
 const ebookRoutes = require('./routes/ebookRoutes');
 const mentoriaRoutes = require('./routes/mentoriaRoutes');
+const enacRoutes = require('./routes/enacRoutes');
+const homeRoutes = require('./routes/homeRoutes');
+const singUpRoutes = require('./routes/singUpRoutes');
+const loginRoutes = require('./routes/loginRoutes');
+const codigoComentadoRoutes = require('./routes/codigoComentadoRoutes');
+const contatoRoutes = require('./routes/contatoRoutes');
+const avisosRoutes = require('./routes/avisosRoutes');
 
 const app = express();
 
-// BANCO DE DADOS
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE,
-    port: process.env.DATABASE_PORT
-});
+// //configurando o cors
+const whiteList = [ 'http://localhost:3002', 'http://localhost:3000' ];
 
-db.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
     } else {
-        console.log('✅ Banco de dados conectado com sucesso!');
+      callback(new Error('Not Allowed by CORS'));
     }
-});
+  },
+};
+
+
 
 // SESSÃO E FLASH
 app.use(session({
-    secret: 'segredo-super-seguro',
-    resave: true,
-    saveUninitialized: true
+  secret: process.env.SECRET_SESSIONS,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 30,
+    httpOnly: true
+  }
 }));
 app.use(flash());
-
-app.use((req, res, next) => {
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-    next();
-});
-
 
 // EJS CONFIGURAÇÃO
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// PÁGINAS ESTÁTICAS
-app.get('/', (req, res) => res.render('index'));
-app.get('/login', (req, res) => {
-    // Apenas renderiza — não consome a flash
-    res.render('login');
-});
-app.get('/signup', (req, res) => res.render('signup'));
-app.get('/codigoComentado', (req, res) => res.render('codigoComentado'));
-app.get('/avisos', (req, res) => res.render('avisos'));
-app.get('/contato', (req, res) => res.render('contato'));
-app.get('/enac2025-2', (req, res) => res.render('enac2025-2'));
-
-// FORMULÁRIOS: Cadastro e Login
-app.post('/signup', (req, res) => {
-    const { name, email, password } = req.body;
-    const query = 'INSERT INTO pessoa (nome, email, senha) VALUES (?, ?, ?)';
-    db.query(query, [name, email, password], (err) => {
-        if (err) {
-            req.flash('error', 'Erro ao cadastrar usuário. Tente novamente.');
-            return res.redirect('/signup');
-        }
-        req.flash('success', 'Cadastro realizado com sucesso! Faça login abaixo.');
-        res.redirect('/login');
-    });
-});
-
-app.post('/login', (req, res) => {
-    const { email, password } = req.body;
-    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-    db.query(query, [email, password], (err, result) => {
-        if (err || result.length === 0) {
-            req.flash('error', 'Email ou senha incorretos.');
-            return res.redirect('/login');
-        }
-        req.flash('success', 'Login bem-sucedido!');
-        res.redirect('/');
-    });
-});
-
-// ROTAS EXTERNAS
-app.use(questionRoutes);
-app.use(ebookRoutes);
-app.use(mentoriaRoutes);
 
 // MIDDLEWARES
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const { checkCsrfError } = require('./middlewares/middleware');
+app.use(cors(corsOptions));
+const { checkCsrfError, middlewareGlobal} = require('./middlewares/middleware');
+app.use(middlewareGlobal);
+
+// ROTAS EXTERNAS
+app.use(questionRoutes);
+app.use(ebookRoutes);
+app.use(mentoriaRoutes);
+app.use(enacRoutes);
+app.use(homeRoutes);
+app.use(singUpRoutes);
+app.use(loginRoutes);
+app.use(codigoComentadoRoutes);
+app.use(contatoRoutes);
+app.use(avisosRoutes);
+
 app.use(checkCsrfError);
 
 // MATERIAIS
