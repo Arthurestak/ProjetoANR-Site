@@ -58,7 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors(corsOptions));
-const { checkCsrfError, middlewareGlobal} = require('./middlewares/middleware');
+const { checkCsrfError, middlewareGlobal, notFound} = require('./middlewares/middleware');
 app.use(middlewareGlobal);
 
 // ROTAS EXTERNAS
@@ -74,10 +74,7 @@ app.use(contatoRoutes);
 app.use(avisosRoutes);
 
 app.use(checkCsrfError);
-
-// MATERIAIS
-app.use('/materiais.json', express.static(path.join(__dirname, 'Professor-Dashboard/materiais.json')));
-app.use('/uploads', express.static(path.join(__dirname, 'Professor-Dashboard/public/uploads')));
+app.use(notFound);
 
 // SERVIDOR
 const PORT = 3000;
