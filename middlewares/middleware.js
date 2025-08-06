@@ -14,6 +14,12 @@ exports.checkCsrfError  = (err, req, res, next) =>{
 }
 
 exports.notFound = (req, res, next) =>{
-       res.status(404).render('404'); 
-       next();
+      let isLoged = false;
+      if(req.session.user) {
+            isLoged = true
+      };
+      res.status(404).render('404', {
+            situation: isLoged
+      }); 
+      next();
 }

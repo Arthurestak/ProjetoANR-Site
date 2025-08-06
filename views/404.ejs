@@ -9,7 +9,11 @@
     <link rel="shortcut icon" href="/images/ANR LogoPequena.webp" type="image/x-icon" />
 </head>
 <body>
-    <%- include('./partials/headerNaoLogado.ejs') %>
+    <% if(situation){ %>    
+        <%- include('./partials/header.ejs') %>
+        <% }else{ %> 
+            <%- include('./partials/headerNaoLogado.ejs') %>
+        <% } %>
 
     <main>
         <div class="container">
