@@ -6,7 +6,6 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const cors = require('cors');
 
-
 // ROTAS
 const questionRoutes = require('./routes/questionRoutes');
 const ebookRoutes = require('./routes/ebookRoutes');
@@ -33,8 +32,6 @@ const corsOptions = {
     }
   },
 };
-
-
 
 // SESSÃO E FLASH
 app.use(session({
