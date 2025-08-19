@@ -24,3 +24,5 @@ build/
 
 # Ignorar arquivos do Git
 .git/
+
+app-web.tar

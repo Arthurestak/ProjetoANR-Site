@@ -1,32 +1,37 @@
 window.addEventListener("DOMContentLoaded", async () => {
-    const section = document.querySelectorAll(".section-title");
-    const container = document.querySelectorAll(".container");
-    const sidebar = document.getElementById("sidebar");
-    const toggleButton = document.querySelector(".sidebar-toggle");
-    const closeButton = document.querySelector(".close-sidebar");
-    
-    section.forEach((section, hidden) =>{
-        setTimeout(() => {
-            section.classList.remove("hidden");
-            section.classList.add("show");
-        }, 700)
+  const sections = document.querySelectorAll(".section-title");
+  const containers = document.querySelectorAll(".container");
+  const sidebar = document.getElementById("sidebar");
+  const toggleButton = document.querySelector(".sidebar-toggle");
+  const closeButton = document.querySelector(".close-sidebar");
+
+  // Animação das sections
+  sections.forEach((section) => {
+    setTimeout(() => {
+      section.classList.remove("hidden");
+      section.classList.add("show");
+    }, 700);
+  });
+
+  // Animação dos containers
+  containers.forEach((card) => {
+    setTimeout(() => {
+      card.classList.remove("hidden");
+      card.classList.add("show");
+    }, 1000);
+  });
+
+  // Evento para abrir a sidebar
+  if (toggleButton && sidebar) {
+    toggleButton.addEventListener("click", () => {
+      sidebar.classList.add("active");
     });
+  }
 
-    container
-    .forEach((card, hidden) =>{
-        setTimeout(() => {
-            card.classList.remove("hidden");
-            card.classList.add("show");
-        }, 1000)
+  // Evento para fechar a sidebar
+  if (closeButton && sidebar) {
+    closeButton.addEventListener("click", () => {
+      sidebar.classList.remove("active");
     });
-
-     toggleButton.addEventListener("click", function () {
-         sidebar.classList.add("active");
-     });
-
-    closeButton.addEventListener("click", function () {
-        sidebar.classList.remove("active");
-    });
-
+  }
 });
-

@@ -13,7 +13,7 @@ exports.index = (req, res) =>{
 }
 exports.show = async (req, res) =>{
     const { email, senha } = req.body;
-    const query = 'SELECT * FROM pessoa WHERE email = ? AND senha = ?';
+    const query = 'SELECT * FROM aluno WHERE email = ? AND senha = ?';
     db.query(query, [email, senha], (err, result) => {
 
         if (err || result.length === 0) {

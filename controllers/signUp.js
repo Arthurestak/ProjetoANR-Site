@@ -15,7 +15,7 @@ exports.index = (req, res) =>{
 
 exports.show = (req, res) =>{
     const { name, email, password } = req.body;
-    const query = 'INSERT INTO pessoa (nome, email, senha) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO aluno (nome, email, senha) VALUES (?, ?, ?)';
     db.query(query, [name, email, password], (err) => {
     if (err) {
         req.flash('errors', 'Erro ao cadastrar usuário. Tente novamente.');
@@ -27,3 +27,4 @@ exports.show = (req, res) =>{
     res.redirect('/login');
     })
 }
+

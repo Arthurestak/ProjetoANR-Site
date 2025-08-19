@@ -1,79 +1,77 @@
 require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
 const cors = require('cors');
 
-// ROTAS
-const questionRoutes = require('./routes/questionRoutes');
-const ebookRoutes = require('./routes/ebookRoutes');
-const mentoriaRoutes = require('./routes/mentoriaRoutes');
-const enacRoutes = require('./routes/enacRoutes');
-const homeRoutes = require('./routes/homeRoutes');
-const singUpRoutes = require('./routes/singUpRoutes');
-const loginRoutes = require('./routes/loginRoutes');
-const codigoComentadoRoutes = require('./routes/codigoComentadoRoutes');
-const contatoRoutes = require('./routes/contatoRoutes');
-const avisosRoutes = require('./routes/avisosRoutes');
+// 🛢️ Conexão com MySQL
+const db = require('./db'); // importa a conexão do arquivo db.js
 
 const app = express();
 
-// //configurando o cors
-const whiteList = [ 'http://localhost:3002', 'http://localhost:3000' ];
+// 🔐 Verificação de variável de sessão
+if (!process.env.SECRET_SESSIONS) {
+  console.warn('⚠️ Variável SECRET_SESSIONS não definida no .env');
+}
 
+// 🌐 CORS
+const whiteList = ['http://localhost:3002', 'http://localhost:3000'];
 const corsOptions = {
   origin: (origin, callback) => {
-    if (whiteList.indexOf(origin) !== -1 || !origin) {
+    if (whiteList.includes(origin) || !origin) {
       callback(null, true);
     } else {
-      callback(new Error('Not Allowed by CORS'));
+      callback(new Error('Not allowed by CORS'));
     }
   },
 };
+app.use(cors(corsOptions));
 
-// SESSÃO E FLASH
+// 🧠 Middlewares globais
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// 💾 Sessão e Flash
 app.use(session({
   secret: process.env.SECRET_SESSIONS,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 30,
+    maxAge: 1000 * 60 * 60 * 24 * 30, // 30 dias
     httpOnly: true
   }
 }));
 app.use(flash());
 
-// EJS CONFIGURAÇÃO
+// 🎨 EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-
-// MIDDLEWARES
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors(corsOptions));
-const { checkCsrfError, middlewareGlobal, notFound} = require('./middlewares/middleware');
+// 🔒 Middlewares personalizados
+const { checkCsrfError, middlewareGlobal, notFound } = require('./middlewares/middleware');
 app.use(middlewareGlobal);
 
-// ROTAS EXTERNAS
-app.use(questionRoutes);
-app.use(ebookRoutes);
-app.use(mentoriaRoutes);
-app.use(enacRoutes);
-app.use(homeRoutes);
-app.use(singUpRoutes);
-app.use(loginRoutes);
-app.use(codigoComentadoRoutes);
-app.use(contatoRoutes);
-app.use(avisosRoutes);
+// 📦 Rotas
+app.use(require('./routes/questionRoutes'));
+app.use(require('./routes/ebookRoutes'));
+app.use(require('./routes/mentoriaRoutes'));
+app.use(require('./routes/enacRoutes'));
+app.use(require('./routes/homeRoutes'));
+app.use(require('./routes/signUpRoutes'));
+app.use(require('./routes/loginRoutes'));
+app.use(require('./routes/codigoComentadoRoutes'));
+app.use(require('./routes/contatoRoutes'));
+app.use(require('./routes/avisosRoutes'));
 
+// ⚠️ Tratamento de erros
 app.use(checkCsrfError);
 app.use(notFound);
 
-// SERVIDOR
-const PORT = 3000;
+// 🚀 Servidor
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`✅ Servidor rodando em http://localhost:${PORT}`);
 });
