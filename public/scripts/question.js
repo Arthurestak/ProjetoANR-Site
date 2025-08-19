@@ -114,4 +114,56 @@ function verificarResposta(id_questao) {
     }
   }
 
+const area   = document.getElementById('answer-q1');
+const count  = document.getElementById('count-q1');
+const hint   = document.getElementById('hint-q1');
+const clear  = document.getElementById('clear-q1');
+const send   = document.getElementById('send-q1');
+const model  = document.getElementById('model-answer');
+const MAX = 900;     
+const MIN_WORDS = 3;  
 
+
+function updateCount() {
+    const len = area.value.length;
+    count.textContent = `${len}/${MAX}`;
+    count.style.fontWeight = '400';
+}
+
+area.addEventListener('input', updateCount);
+updateCount();
+
+
+send.addEventListener('click', () => {
+    const words = area.value.trim().split(/\s+/).filter(Boolean);
+    if (words.length < MIN_WORDS) {
+        hint.textContent = `Escreva um pouco mais (mínimo recomendado: ${MIN_WORDS} palavras).`;
+        hint.className = 'hint-error';
+        area.focus();
+        return;
+    }
+    if (area.value.length > MAX) {
+        hint.textContent = `Sua resposta excede ${MAX} caracteres. Resuma levemente.`;
+        hint.className = 'hint-error';
+        area.focus();
+        return;
+    }
+    if (area.value === model) {
+        hint.textContent = 'Resposta registrada!';
+        hint.className = 'hint-ok';
+        return;
+    }
+
+    hint.textContent = `Sua resposta está incorreta.`;
+    hint.className = 'hint-error';
+    area.focus();
+});
+
+
+clear.addEventListener('click', () => {
+    area.value = '';
+    hint.textContent = 'Dica: procure responder em 2–6 linhas.';
+    hint.className = '';
+    updateCount();
+    area.focus();
+})

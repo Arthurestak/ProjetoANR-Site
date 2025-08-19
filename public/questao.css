@@ -422,6 +422,63 @@ footer {
 input{
   cursor: pointer;
 }
+
+.input-discurssiva{
+  background-color: #ffffb7;
+  height: 80px;
+  border-radius: 20px;
+  border: none;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  cursor: text;
+}
+
 .btn-arrow{
   border: none;
 }
+
+.buttons-discurs{
+  display: flex;  
+  flex-direction: row;
+  gap: 28px;
+}
+.btn-limpar{
+   background: transparent;
+      color: rgb(0, 0, 0);
+      box-shadow: none;
+      border: 1px solid rgba(2, 8, 23, .08);
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+}
+
+  .q-area {
+      width: 100%;
+      display: grid;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 10px;
+    }
+
+    .q-area textarea {
+      width: 535px;
+      min-height: 120px;
+      resize: vertical;
+      padding: 12px 14px;
+      border: 1px solid rgba(2, 8, 23, .08);
+      border-radius: 8px;
+      outline: none;
+      font: inherit;
+      background:#ffffff;
+      box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+      transition: box-shadow .2s, border-color .2s;
+    }
+
+    .q-area textarea:focus {
+      border-color: #5b2aa2;
+      box-shadow: 0 0 0 4px rgba(71, 85, 105, .25);
+    }

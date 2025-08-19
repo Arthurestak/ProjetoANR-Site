@@ -71,21 +71,43 @@
               <span>
                 <%= question.id_questao %>. <%= question.sentence %>
               </span>
-              <div class="alternativas">
-                <% alternatives.forEach(alternative=> { %>
-                  <% if (alternative.id_questao===question.id_questao) { %>
-                    <label>
-                      <input type="radio" name="resposta-<%= question.id_questao %>"
-                        value="<%= alternative.id_alternative %>" data-answer="<%= alternative.answer %>"
-                        data-label="<%= alternative.letter %>">
-                      <%= alternative.letter %>)<%= alternative.sentence %>
-                    </label>
-                    <% } %>
-                      <% }) %>
-              </div>
+                <% if (question.type !== 3) { %>
+                  <div class="alternativas">
+                    <% alternatives.forEach(alternative=> { %>
+                      <% if (alternative.id_questao===question.id_questao) { %>
+                        <label>
+                          <input type="radio" name="resposta-<%= question.id_questao %>"
+                            value="<%= alternative.id_alternative %>" data-answer="<%= alternative.answer %>"
+                            data-label="<%= alternative.letter %>">
+                          <%= alternative.letter %>)<%= alternative.sentence %>
+                        </label>
+                      <% } %>
+                    <% }) %>
+                  </div>
 
-              <button class="responder-btn" onclick="verificarResposta(<%= question.id_questao %>)">Responder</button>
-              <div id="feedback-<%= question.id_questao %>" class="feedback"></div>
+                  <button class="responder-btn" onclick="verificarResposta(<%= question.id_questao %>)">Responder</button>
+                  <div id="feedback-<%= question.id_questao %>" class="feedback"></div>
+                <% }else{ %>      
+
+                  <section class="q-area">
+                  <% alternatives.forEach(alternative=> { %>
+                    <% if (alternative.id_questao===question.id_questao) { %>
+                        <input type="hidden" id="model-answer" name="model-answer-<%= question.id_questao %>" value="<%= alternative.sentence %>">
+                        <label for="answer-q1" class="sr-only">Resposta</label>
+                        <textarea id="answer-q1" placeholder="Digite sua resposta aqui..."></textarea>
+                        <div class="q-helper">
+                          <span id="hint-q1">Dica: procure responder em 2–6 linhas.</span>
+                          <span id="count-q1">0/1200</span>
+                        </div>
+                    <% } %>
+                  <% }) %>
+                  </section>
+                  <div class="buttons-discurs">
+                    <button class="btn-limpar" id="clear-q1">Limpar</button>
+                    <button class="responder-btn" id="send-q1">Responder</button>
+                  </div>
+                  <div id="feedback-<%= question.id_questao %>" class="feedback"></div>
+                <%}%>
             </div>
           </div>
           <%});%>

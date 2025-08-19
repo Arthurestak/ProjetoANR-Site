@@ -26,4 +26,3 @@ exports.index = async (req, res) =>{
       alternatives: alternatives
     });   
 }  
-
